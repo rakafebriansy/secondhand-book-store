@@ -9,7 +9,7 @@ interface ProductService {
     function getCount(string $keyword): int;
     function add(array $data): Product|bool;
     function update(array $data): Product|bool;
-    function delete(); 
+    function delete(int $id): bool; 
 }
 
 ?>

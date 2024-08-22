@@ -60,4 +60,16 @@ class ProductController extends Controller
             return back()->withInput()->withErrors(['errors' => $error->getMessage()]);
         }
     }
+    public function delete(Request $request): RedirectResponse
+    {
+        try {
+            $response = $this->product_service->delete($request->id);
+            if($response) {
+                return back()->with('success', 'Delete product success');
+            }
+            return back()->withInput()->withErrors(['errors' => 'Delete product failed']);
+        } catch (\Exception $error) {
+            return back()->withInput()->withErrors(['errors' => $error->getMessage()]);
+        }
+    }
 }

@@ -23,4 +23,5 @@ Route::prefix('/admin')->group(function() {
     Route::get('/product',[App\Http\Controllers\Admin\ProductController::class,'index']);
     Route::post('/product',[App\Http\Controllers\Admin\ProductController::class,'store']);
     Route::patch('/product',[App\Http\Controllers\Admin\ProductController::class,'update']);
+    Route::delete('/product',[App\Http\Controllers\Admin\ProductController::class,'delete']);
 });
