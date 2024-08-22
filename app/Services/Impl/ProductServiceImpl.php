@@ -26,21 +26,22 @@ class ProductServiceImpl implements ProductService {
         $count = Product::where('name','LIKE','%' . $keyword . '%')->count();
         return $count;
     }
-    public function add(string $name, string $description, int $price, int $quantity): Product|bool
+    public function add(array $data): Product|bool
     {
-        $product = new Product();
-        $product->name = $name;
-        $product->description = $description;
-        $product->price = $price;
-        $product->quantity = $quantity;
+        $product = new Product($data);
         if($product->save()){
             return $product;
         }
         return false;
     }
-    public function update()
+    public function update(array $data): Product|bool
     {
-        
+        $product = Product::find($data['id']);
+        $product->fill($data);
+        if($product->save()){
+            return $product;
+        }
+        return false;
     }
     public function delete()
     {

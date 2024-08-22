@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,11 +38,24 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         try {
-            $response = $this->product_service->add($data['name'],$data['description'],$data['price'],$data['quantity']);
+            $response = $this->product_service->add($data);
             if($response) {
                 return back()->with('success', 'Add product success');
             }
             return back()->withInput()->withErrors(['errors' => 'Add product failed']);
+        } catch (\Exception $error) {
+            return back()->withInput()->withErrors(['errors' => $error->getMessage()]);
+        }
+    }
+    public function update(UpdateProductRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        try {
+            $response = $this->product_service->update($data);
+            if($response) {
+                return back()->with('success', 'Update product success');
+            }
+            return back()->withInput()->withErrors(['errors' => 'Update product failed']);
         } catch (\Exception $error) {
             return back()->withInput()->withErrors(['errors' => $error->getMessage()]);
         }

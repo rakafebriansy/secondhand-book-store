@@ -22,4 +22,5 @@ Route::prefix('/admin')->group(function() {
     Route::post('/',[App\Http\Controllers\Admin\AuthController::class,'doLogin']);
     Route::get('/product',[App\Http\Controllers\Admin\ProductController::class,'index']);
     Route::post('/product',[App\Http\Controllers\Admin\ProductController::class,'store']);
+    Route::patch('/product',[App\Http\Controllers\Admin\ProductController::class,'update']);
 });

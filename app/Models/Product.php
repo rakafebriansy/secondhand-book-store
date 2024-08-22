@@ -13,6 +13,12 @@ class Product extends Model
     public $incrementing = true;
     public $timestamps = true;
 
+    protected $fillable = [
+        'name',
+        'price',
+        'description',
+        'quantity',
+    ];
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class, 'product_id', 'id');
