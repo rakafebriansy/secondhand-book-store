@@ -6,6 +6,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('myCartDropdownButton1').click();
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//     document.getElementById('myCartDropdownButton1').click();
+// });

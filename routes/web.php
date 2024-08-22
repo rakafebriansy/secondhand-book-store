@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +18,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('/admin')->group(function() {
-    Route::get('/',[ProductController::class,'index']);
+    Route::get('/',[App\Http\Controllers\Admin\AuthController::class,'login']);
+    Route::post('/',[App\Http\Controllers\Admin\AuthController::class,'doLogin']);
+    Route::get('/product',[App\Http\Controllers\Admin\ProductController::class,'index']);
+    Route::post('/product',[App\Http\Controllers\Admin\ProductController::class,'store']);
 });
