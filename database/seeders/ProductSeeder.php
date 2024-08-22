@@ -15,10 +15,11 @@ class ProductSeeder extends Seeder
     {
         for($i = 0; $i < 40; $i++) {
             Product::insert([
-                'name' => fake()->name,
+                'name' => fake()->word(),
                 'description' => fake()->sentence(),
                 'price' => random_int(10000, 100000),
-                'quantity' => random_int(1,20)
+                'quantity' => random_int(1,20),
+                'image' => fake()->word(),
             ]);
         }
     }

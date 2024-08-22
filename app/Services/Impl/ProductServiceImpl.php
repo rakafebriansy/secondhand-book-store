@@ -18,7 +18,7 @@ class ProductServiceImpl implements ProductService {
             $productsQuery = $productsQuery->where('name','LIKE','%' . $keyword . '%');
         }
 
-        $products = $productsQuery->get();
+        $products = $productsQuery->orderBy('name')->get();
         return $products;
     }
     public function getCount(string $keyword): int

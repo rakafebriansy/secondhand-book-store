@@ -38,6 +38,11 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         try {
+            $file = $request->file('image');
+            $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storePubliclyAs('product', $file_name);
+            $data['image'] = $file_name;
+
             $response = $this->product_service->add($data);
             if($response) {
                 return back()->with('success', 'Add product success');
@@ -51,6 +56,13 @@ class ProductController extends Controller
     {
         $data = $request->validated();
         try {
+            if($request->file('image') != null) {
+                $file = $request->file('image');
+                $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->storePubliclyAs('product', $file_name);
+                $data['image'] = $file_name;
+            }
+
             $response = $this->product_service->update($data);
             if($response) {
                 return back()->with('success', 'Update product success');
