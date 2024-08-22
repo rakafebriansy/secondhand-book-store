@@ -17,8 +17,10 @@ class ProductController extends Controller
     }
     public function index(): View
     {
+        $products = $this->product_service->getAll();
         return view('admin.pages.product',[
-            'title' => 'Admin | Product'
+            'title' => 'Admin | Product',
+            'products' => $products
         ]);
     }
     public function store(StoreProductRequest $request): RedirectResponse
