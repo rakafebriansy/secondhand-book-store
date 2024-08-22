@@ -18,18 +18,19 @@ class ProductController extends Controller
     }
     public function index(Request $request): View
     {
-        Log::info($request->page);
         $page = $request->page ?? 1;
+        $keyword = $request->keyword ?? '';
         $per_page = 10;
         $skipped = ($page - 1 ?? 0) * $per_page;
 
-        $products = $this->product_service->getPaginate($per_page, $skipped);
-        $page_count = floor($this->product_service->getCount() / 10);
+        $products = $this->product_service->getPaginate($per_page, $skipped, $keyword);
+        $page_count = floor($this->product_service->getCount($keyword) / 10);
         return view('admin.pages.product',[
             'title' => 'Admin | Product',
             'products' => $products,
             'page_count' => $page_count,
-            'current_page' => $page
+            'current_page' => $page,
+            'current_keyword' => $keyword
         ]);
     }
     public function store(StoreProductRequest $request): RedirectResponse

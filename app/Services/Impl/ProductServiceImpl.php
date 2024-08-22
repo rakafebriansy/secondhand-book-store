@@ -10,14 +10,20 @@ class ProductServiceImpl implements ProductService {
     {
 
     }
-    public function getPaginate(int $per_page, int $skipped): Collection|bool
+    public function getPaginate(int $per_page, int $skipped, string $keyword): Collection|bool
     {
-        $products = Product::skip($skipped)->take($per_page)->get();
+        $productsQuery = Product::skip($skipped)->take($per_page);
+
+        if(strlen($keyword) > 0) {
+            $productsQuery = $productsQuery->where('name','LIKE','%' . $keyword . '%');
+        }
+
+        $products = $productsQuery->get();
         return $products;
     }
-    public function getCount(): int
+    public function getCount(string $keyword): int
     {
-        $count = Product::count();
+        $count = Product::where('name','LIKE','%' . $keyword . '%')->count();
         return $count;
     }
     public function add(string $name, string $description, int $price, int $quantity): Product|bool
