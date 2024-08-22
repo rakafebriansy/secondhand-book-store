@@ -10,10 +10,15 @@ class ProductServiceImpl implements ProductService {
     {
 
     }
-    public function getAll(): Collection|bool
+    public function getPaginate(int $per_page, int $skipped): Collection|bool
     {
-        $products = Product::all();
+        $products = Product::skip($skipped)->take($per_page)->get();
         return $products;
+    }
+    public function getCount(): int
+    {
+        $count = Product::count();
+        return $count;
     }
     public function add(string $name, string $description, int $price, int $quantity): Product|bool
     {
