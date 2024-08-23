@@ -25,7 +25,7 @@ class ProductController extends Controller
         $skipped = ($page - 1 ?? 0) * $per_page;
 
         $products = $this->product_service->getPaginate($per_page, $skipped, $keyword);
-        $page_count = floor($this->product_service->getCount($keyword) / 10);
+        $page_count = floor($this->product_service->getCount($keyword) / $per_page);
         return view('admin.pages.product',[
             'title' => 'Admin | Product',
             'products' => $products,
@@ -40,7 +40,7 @@ class ProductController extends Controller
         try {
             $file = $request->file('image');
             $file_name = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->storePubliclyAs('product', $file_name);
+            $file->storePubliclyAs('products', $file_name, 'public');
             $data['image'] = $file_name;
 
             $response = $this->product_service->add($data);

@@ -10,17 +10,15 @@ class Transaction extends Model
 {
     protected $table = 'transactions';
     protected $primaryKey = 'id';
-    protected $keyType = 'int';
-    public $incrementing = true;
+    protected $keyType = 'string';
+    public $incrementing = false;
     public $timestamps = true;
-
+    protected $fillable =[
+        'quantity',
+    ];
     public function admins(): BelongsTo
     {
         return $this->belongsTo(Admin::class, 'admin_id', 'id');
-    }
-    public function products(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
     public function users(): BelongsTo
     {

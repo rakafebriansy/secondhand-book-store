@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('transaction_details', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->enum('status',['To Pay', 'To Ship', 'To Receive', 'Completed', 'Cancelled'])->default('To Pay');
-            $table->integer('product_id');
-            $table->integer('user_id');
-            $table->integer('admin_id')->nullable();
+            $table->unsignedBigInteger('product_id');
+            $table->string('transaction_id');
+            $table->foreign('product_id')->on('products')->references('id');
+            $table->foreign('transaction_id')->on('transactions')->references('id');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaction_details');
     }
 };

@@ -1,8 +1,5 @@
 @extends('admin.partials.body')
 @section('wrapper')
-    @push('scripts')
-        @vite('resources/js/pages/admin/product.js')
-    @endpush
     <section x-ref="productGlobal" x-data="{ product:{}, product_id:0, fileName() { return this.product.image; } }" class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
         <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -34,9 +31,9 @@
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
-                                <th scope="col" class="px-2 py-3">Nama Produk</th>
-                                <th scope="col" class="px-2 py-3">Deskripsi</th>
-                                <th scope="col" class="px-2 py-3">Harga</th>
+                                <th scope="col" class="px-4 py-3">Nama Produk</th>
+                                <th scope="col" class="px-4 py-3">Deskripsi</th>
+                                <th scope="col" class="px-4 py-3">Harga</th>
                                 <th scope="col" class="px-1 py-3">Kuantitas</th>
                                 <th scope="col" class="px-3 py-3">
                                     <span class="sr-only">Actions</span>
@@ -48,8 +45,8 @@
                                 @foreach ($products as $product)
                                 <tr class="border-b dark:border-gray-700">
                                     <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $product->name }}</th>
-                                    <td class="px-2 py-3">{{ $product->description }}</td>
-                                    <td class="px-2 py-3">Rp {{ $product->price }}</td>
+                                    <td class="px-4 py-3">{{ $product->description }}</td>
+                                    <td class="px-4 py-3">Rp {{ $product->price }}</td>
                                     <td class="px-1 py-3 max-w-[12rem] truncate">{{ $product->quantity }}</td>
                                     <td class="px-3 py-3 flex items-center justify-end">
                                         <button id="dropdown-button-{{ $product->id }}" data-dropdown-toggle="dropdown-{{ $product->id }}" class="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">

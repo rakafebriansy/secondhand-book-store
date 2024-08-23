@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }}</title>
-    <link rel="icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="icon" href="{{ asset('images/Logo.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('scripts')
 </head>
 <body class="relative">
     @if ($errors->any())
@@ -37,5 +36,6 @@
     </div>
     @endif
     @yield('main')
+    @stack('midtrans-snap')
 </body>
 </html>
