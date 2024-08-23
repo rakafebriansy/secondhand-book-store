@@ -30,6 +30,7 @@ class ProductController extends Controller
             'title' => 'Admin | Product',
             'products' => $products,
             'page_count' => $page_count,
+            'per_page' => $per_page,
             'current_page' => $page,
             'current_keyword' => $keyword
         ]);

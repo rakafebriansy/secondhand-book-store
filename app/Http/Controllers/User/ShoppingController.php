@@ -32,7 +32,8 @@ class ShoppingController extends Controller
             'products' => $products,
             'page_count' => $page_count,
             'current_page' => $page,
-            'current_keyword' => $keyword
+            'current_keyword' => $keyword,
+            'per_page' => $per_page
         ]);
     }
     public function doCheckout(Request $request): View|RedirectResponse

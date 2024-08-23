@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -56,5 +57,13 @@ class AuthController extends Controller
             Log::error('Registration error: ' . $error->getMessage());
             return back()->withInput()->withErrors(['errors' => $error->getMessage()]);
         }
+    }
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login')->with('success', 'Logout success');;
     }
 }

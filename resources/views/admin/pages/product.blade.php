@@ -46,7 +46,7 @@
                                 <tr class="border-b dark:border-gray-700">
                                     <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $product->name }}</th>
                                     <td class="px-4 py-3">{{ $product->description }}</td>
-                                    <td class="px-4 py-3">Rp {{ $product->price }}</td>
+                                    <td class="px-4 py-3">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                     <td class="px-1 py-3 max-w-[12rem] truncate">{{ $product->quantity }}</td>
                                     <td class="px-3 py-3 flex items-center justify-end">
                                         <button id="dropdown-button-{{ $product->id }}" data-dropdown-toggle="dropdown-{{ $product->id }}" class="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
@@ -106,15 +106,14 @@
                         </li>
                         @endif
                         @php
-                            $navigation_start = floor($current_page / 3) + 1;
-                            $navigation_end = $page_count >=3 ? $navigation_start + 2 : $page_count;
-                            $navigation_active = $current_page % 3;
+                            $navigation_start = $current_page - 1 > 0 ? $current_page - 1 : $current_page;
+                            $navigation_end = $page_count >=3 ? $current_page + 1 : $page_count;
                         @endphp
                         @for ($i = $navigation_start; $i <= $navigation_end; $i++)
                             @if ($i > $page_count)
                                 @break
                             @endif
-                            @if ($i % 3 == $navigation_active)
+                            @if ($i == $current_page)
                             <li>
                                 <a href="#" aria-current="page" class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">{{ $i }}</a>
                             </li>
@@ -124,18 +123,18 @@
                             </li>
                             @endif
                         @endfor
-                        @if ($current_page != $page_count && $page_count != $navigation_end)
+                        @if ($navigation_end < $page_count - 1)
                         <li>
                             <a href="/admin/product?page={{ $current_page + 5 <= $page_count ? $current_page + 5 : $page_count }}{{ strlen($current_keyword > 0) ? "&keyword=$current_keyword" : '' }}" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">...</a>
                         </li>
-                            @if ($current_page != $page_count-1)
+                        @endif
+                        @if ($navigation_end < $page_count)
                             <li>
                                 <a href="/admin/product?page={{ $page_count }}{{ strlen($current_keyword > 0) ? "&keyword=$current_keyword" : '' }}" class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{ $page_count }}</a>
                             </li>
-                            @endif
                         @endif
                         
-                        @if ($current_page < $page_count)
+                        @if ($navigation_end < $page_count)
                         <li>
                             <a href="/admin/product?page={{ $current_page + 1 }}{{ strlen($current_keyword > 0) ? "&keyword=$current_keyword" : '' }}" class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                 <span class="sr-only">Next</span>

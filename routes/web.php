@@ -14,18 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ShoppingController::class, 'index']);
 Route::get('/register',[App\Http\Controllers\User\AuthController::class,'register']);
 Route::post('/register',[App\Http\Controllers\User\AuthController::class,'doRegister']);
-Route::get('/login',[App\Http\Controllers\User\AuthController::class,'login']);
+Route::get('/login',[App\Http\Controllers\User\AuthController::class,'login'])->name('login');
 Route::post('/login',[App\Http\Controllers\User\AuthController::class,'doLogin']);
+Route::get('/logout',[App\Http\Controllers\User\AuthController::class,'logout']);
 Route::middleware('auth:web')->group(function() {
+    Route::get('/', [ShoppingController::class, 'index']);
     Route::post('/checkout', [ShoppingController::class, 'doCheckout']);
     Route::get('/order-confirmation', [ShoppingController::class, 'confirmOrder']);
 });
 
 Route::prefix('/admin')->group(function() {
-    Route::get('/',[App\Http\Controllers\Admin\AuthController::class,'login'])->middleware('guest:admin,web');
+    Route::get('/',[App\Http\Controllers\Admin\AuthController::class,'login'])->middleware('guest:admin');
     Route::post('/',[App\Http\Controllers\Admin\AuthController::class,'doLogin']);
     Route::middleware('auth:admin')->group(function() {
         Route::get('/product',[App\Http\Controllers\Admin\ProductController::class,'index']);
